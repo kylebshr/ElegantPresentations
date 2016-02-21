@@ -2,7 +2,7 @@
 
 Does this need to exist? Probably not. It's very easy to implement. But I've looked around for an existing presenter that animates in the same fashion as Twitter.app *many* times, and was never able to find one — so here it is, with a few extra options too!
 
-<img src="https://zippy.gfycat.com/WideeyedMildGelada.gif" width=320>
+<img src="https://fat.gfycat.com/WideeyedMildGelada.gif" width=320>
 
 ## Installation
 
