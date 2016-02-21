@@ -67,6 +67,11 @@ enum PresentationOption {
 }
 ````
 
+## TODO
+
+- [ ] Adapt to rotation
+- [ ] Animate properly when rotated
+
 ## Contribute
 
 I'm new to creating libraries, so if I can improve this in anyway please let me know! Open an issue, make a pull request, or [reach out on twitter](https://twitter.com/kylebshr).
