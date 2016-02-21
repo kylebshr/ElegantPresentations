@@ -1,6 +1,6 @@
-# TwitterPresentationController
+# ElegantPresentations
 
-Does this need to exist? Probably not. It's very easy to implement. But I've looked around for a presenter that animates in the same fashion as Twitter.app *many* times, and was never able to find one — so here it is!
+Does this need to exist? Probably not. It's very easy to implement. But I've looked around for an existing presenter that animates in the same fashion as Twitter.app *many* times, and was never able to find one — so here it is, with a few extra options too!
 
 <img src="https://zippy.gfycat.com/NarrowThickCod.gif" width=200>
 
@@ -17,13 +17,13 @@ pod 'TwitterPresentationController'
 ## How To Use
 
 
-Add `import TwitterPresentationController` to the top of your presenting view controller and Conform to the `UIViewControllerTransitioningDelegate` protocol like so:
+Add `import ElegantPresentations` to the top of your presenting view controller and Conform to the `UIViewControllerTransitioningDelegate` protocol like so:
 
 ````swift
 // Conform to UIViewControllerTransitioningDelegate
 
 func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-    return TwitterPresentationController(presentedViewController: presented, presentingViewController: presenting)
+	return ElegantPresentations.controller(presentedViewController: presented, presentingViewController: presenting, options: [])
 }
 ````
 
@@ -53,10 +53,20 @@ presentViewController(destinationVC, animated: true, completion: nil)
 
 Check out the example project for examples of both methods.
 
+### Options
+
+The factory method for creating the controller takes an option set, which is an array of `PresentationOption`. They are all implemented in the example project with easy toggles to try them all out. 
+
+````swift
+enum PresentationOption {
+    case NoDimmingView 						// Don't dim the presenting view controller
+    case DismissOnDimmingViewTap 			// Tapping outside the presented view controller dismisses it
+    case PresentingViewKeepsSize 			// Prevent the presenting view controller from shrinking back 
+    case PresentedHeight(CGFloat)			// Give the presented view controller a fixed height
+    case PresentedPercentHeight(Double)		// Give the presented view controller a percent height (of the presenting view controller)
+}
+````
+
 ## Contribute
 
 I'm new to creating libraries, so if I can improve this in anyway please let me know! Open an issue, make a pull request, or [reach out on twitter](https://twitter.com/kylebshr).
-
--
-
-This framework is not created or endorsed by Twitter 🙂
