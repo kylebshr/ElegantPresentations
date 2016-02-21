@@ -10,7 +10,7 @@ import UIKit
 
 public struct ElegantPresentations {
     
-    public static func Controller(presentedViewController presented: UIViewController,
+    public static func controller(presentedViewController presented: UIViewController,
                 presentingViewController presenting: UIViewController,
                 options: [PresentationOption]) -> UIPresentationController
     {

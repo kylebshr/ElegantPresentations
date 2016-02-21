@@ -58,7 +58,7 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
     }
     
     func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-        return ElegantPresentations.Controller(presentedViewController: presented, presentingViewController: presenting, options: options)
+        return ElegantPresentations.controller(presentedViewController: presented, presentingViewController: presenting, options: options)
     }
 }
 
