@@ -18,15 +18,13 @@ class ElegantPresentationController: UIPresentationController {
         
         view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         view.alpha = 0
-        
-        if self.options.dimmingViewTapDismisses {
-            let recognizer = UITapGestureRecognizer(target: self, action: Selector("dismiss:"))
-            view.addGestureRecognizer(recognizer)
-        }
+        view.userInteractionEnabled = false
         
         return view
     }()
-    
+
+    lazy var recognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("dismiss:"))
+
     let options: PresentationOptions
 
     init(presentedViewController: UIViewController, presentingViewController: UIViewController, options: PresentationOptions) {
@@ -35,6 +33,10 @@ class ElegantPresentationController: UIPresentationController {
     }
     
     override func presentationTransitionWillBegin() {
+        
+        if options.dimmingViewTapDismisses {
+            containerView!.addGestureRecognizer(recognizer)
+        }
         
         dimmingView.alpha = 0
         dimmingView.frame = containerView!.bounds
@@ -84,8 +86,10 @@ class ElegantPresentationController: UIPresentationController {
     
     override func sizeForChildContentContainer(container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         
+        let percentHeight = min(abs(options.presentedPercentHeight), 1)
+
         if options.usePercentHeight {
-            return CGSize(width: parentSize.width, height: parentSize.height * CGFloat(options.presentedPercentHeight))
+            return CGSize(width: parentSize.width, height: parentSize.height * CGFloat(percentHeight))
         }
         else if options.presentedHeight > 0 {
             return CGSize(width: parentSize.width, height: options.presentedHeight)

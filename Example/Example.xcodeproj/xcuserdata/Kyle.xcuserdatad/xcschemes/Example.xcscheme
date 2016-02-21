@@ -15,10 +15,10 @@
             hideIssues = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2729C37C1C7A417B00B41D49"
-               BuildableName = "ElegantPresentations.framework"
-               BlueprintName = "ElegantPresentations"
-               ReferencedContainer = "container:ElegantPresentations.xcodeproj">
+               BlueprintIdentifier = "276988211C7906EF00955C2E"
+               BuildableName = "Example.app"
+               BlueprintName = "Example"
+               ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,24 +29,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2729C3861C7A417B00B41D49"
-               BuildableName = "ElegantPresentationsTests.xctest"
-               BlueprintName = "ElegantPresentationsTests"
-               ReferencedContainer = "container:ElegantPresentations.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2729C37C1C7A417B00B41D49"
-            BuildableName = "ElegantPresentations.framework"
-            BlueprintName = "ElegantPresentations"
-            ReferencedContainer = "container:ElegantPresentations.xcodeproj">
+            BlueprintIdentifier = "276988211C7906EF00955C2E"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -62,15 +52,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2729C37C1C7A417B00B41D49"
-            BuildableName = "ElegantPresentations.framework"
-            BlueprintName = "ElegantPresentations"
-            ReferencedContainer = "container:ElegantPresentations.xcodeproj">
+            BlueprintIdentifier = "276988211C7906EF00955C2E"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,15 +71,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2729C37C1C7A417B00B41D49"
-            BuildableName = "ElegantPresentations.framework"
-            BlueprintName = "ElegantPresentations"
-            ReferencedContainer = "container:ElegantPresentations.xcodeproj">
+            BlueprintIdentifier = "276988211C7906EF00955C2E"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

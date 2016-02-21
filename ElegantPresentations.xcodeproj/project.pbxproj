@@ -10,6 +10,8 @@
 		2729C3811C7A417B00B41D49 /* ElegantPresentations.h in Headers */ = {isa = PBXBuildFile; fileRef = 2729C3801C7A417B00B41D49 /* ElegantPresentations.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2729C3881C7A417B00B41D49 /* ElegantPresentations.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2729C37D1C7A417B00B41D49 /* ElegantPresentations.framework */; };
 		2729C38D1C7A417B00B41D49 /* ElegantPresentationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729C38C1C7A417B00B41D49 /* ElegantPresentationsTests.swift */; };
+		2729C3991C7A419900B41D49 /* ElegantPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729C3971C7A419900B41D49 /* ElegantPresentationController.swift */; };
+		2729C39A1C7A419900B41D49 /* ElegantPresentations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729C3981C7A419900B41D49 /* ElegantPresentations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,8 @@
 		2729C3871C7A417B00B41D49 /* ElegantPresentationsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ElegantPresentationsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2729C38C1C7A417B00B41D49 /* ElegantPresentationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElegantPresentationsTests.swift; sourceTree = "<group>"; };
 		2729C38E1C7A417B00B41D49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2729C3971C7A419900B41D49 /* ElegantPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantPresentationController.swift; sourceTree = "<group>"; };
+		2729C3981C7A419900B41D49 /* ElegantPresentations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantPresentations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,8 @@
 		2729C37F1C7A417B00B41D49 /* ElegantPresentations */ = {
 			isa = PBXGroup;
 			children = (
+				2729C3981C7A419900B41D49 /* ElegantPresentations.swift */,
+				2729C3971C7A419900B41D49 /* ElegantPresentationController.swift */,
 				2729C3801C7A417B00B41D49 /* ElegantPresentations.h */,
 				2729C3821C7A417B00B41D49 /* Info.plist */,
 			);
@@ -194,6 +200,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2729C39A1C7A419900B41D49 /* ElegantPresentations.swift in Sources */,
+				2729C3991C7A419900B41D49 /* ElegantPresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +318,7 @@
 		2729C3921C7A417B00B41D49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -320,12 +329,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kylebashour.ElegantPresentations;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		2729C3931C7A417B00B41D49 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
