@@ -11,7 +11,7 @@ Does this need to exist? Probably not. It's very easy to implement. But I've loo
 ````ruby
 use_frameworks!
 
-pod 'TwitterPresentationController'
+pod 'ElegantPresentations'
 ````
 
 ## How To Use
