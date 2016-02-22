@@ -51,7 +51,11 @@ destinationVC.transitioningDelegate = self
 presentViewController(destinationVC, animated: true, completion: nil)
 ````
 
-Check out the example project for examples of both methods.
+Check out the example project for examples of both methods, and be sure to check out the PresentationOption enum! For example, you could get a presentation very similar to the compose in Mail.app with something like:
+
+````swift
+ElegantPresentations.controller(..., options: [. PresentedHeight(view.frame.height - 40)])
+````
 
 ### Options
 
