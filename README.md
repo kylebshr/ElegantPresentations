@@ -69,8 +69,8 @@ enum PresentationOption {
 
 ## TODO
 
-- [ ] Adapt to rotation
-- [ ] Animate properly when rotated
+- [X] Adapt to rotation
+- [ ] Animate presenting view better when rotated
 
 ## Contribute
 
