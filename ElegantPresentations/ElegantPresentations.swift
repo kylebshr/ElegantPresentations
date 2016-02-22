@@ -8,8 +8,20 @@
 
 import UIKit
 
+/**
+ *  Elegant modal presentations. Contains the function `controller` for creating presentation controllers.
+ */
 public struct ElegantPresentations {
     
+    /**
+     Initializes and returns an elegant presentation controller for transitioning between the specified view controllers.
+     
+     - parameter presentedViewController:  The view controller being presented modally.
+     - parameter presentingViewController: The view controller whose content represents the starting point of the transition.
+     - parameter options:                  An options set for customizing the appearance and behavior of the presentation.
+     
+     - returns: An initialized presentation controller object.
+     */
     public static func controller(presentedViewController presented: UIViewController,
                 presentingViewController presenting: UIViewController,
                 options: [PresentationOption]) -> UIPresentationController
@@ -21,6 +33,7 @@ public struct ElegantPresentations {
     }
 }
 
+// For storing the options set in the options array
 struct PresentationOptions {
     var dimmingViewAlpha: CGFloat = 1
     var dimmingViewTapDismisses = false
@@ -53,6 +66,15 @@ struct PresentationOptions {
     }
 }
 
+/**
+ Options for customizing the presentation animations and behavior
+ 
+ - NoDimmingView:           Do not dim the presenting view controller
+ - DismissOnDimmingViewTap: Dismiss the presented view controller when the area outside its view is tapped
+ - PresentingViewKeepsSize: Do not shrink the presenting view controller into the background
+ - PresentedHeight:         Give the presenting view controller a fixed height (may not work well with rotation)
+ - PresentedPercentHeight:  Give the presenting view controller a percent height of the presented view controller (should work well with rotation)
+ */
 public enum PresentationOption {
     case NoDimmingView
     case DismissOnDimmingViewTap
