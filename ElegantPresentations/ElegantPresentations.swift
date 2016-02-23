@@ -56,6 +56,8 @@ struct PresentationOptions {
             case .PresentedPercentHeight(let percentHeight):
                 usePercentHeight = true
                 presentedPercentHeight = percentHeight
+            case .CustomPresentingScale(let scale):
+                presentingTransform = CGAffineTransformMakeScale(CGFloat(min(1, scale)), CGFloat(min(1, scale)))
             }
         }
         
@@ -81,4 +83,5 @@ public enum PresentationOption {
     case PresentingViewKeepsSize
     case PresentedHeight(CGFloat)
     case PresentedPercentHeight(Double)
+    case CustomPresentingScale(Double)
 }
