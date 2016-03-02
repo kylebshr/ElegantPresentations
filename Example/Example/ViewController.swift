@@ -20,16 +20,16 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
     @IBOutlet weak var heightLabel: UILabel!
     
 
-    var options: [PresentationOption] {
-        var options = [PresentationOption]()
+    var options: Set<PresentationOption> {
+        var options = Set<PresentationOption>()
         
-        if !shrinkPresentingViewSwitch.on { options.append(.PresentingViewKeepsSize) }
-        if !dimPresentingViewSwitch.on { options.append(.NoDimmingView) }
-        if dismissOnTapSwitch.on { options.append(.DismissOnDimmingViewTap) }
+        if !shrinkPresentingViewSwitch.on { options.insert(.PresentingViewKeepsSize) }
+        if !dimPresentingViewSwitch.on { options.insert(.NoDimmingView) }
+        if dismissOnTapSwitch.on { options.insert(.DismissOnDimmingViewTap) }
         
         if let heightValue = Double(heightTextField.text!) {
-            if heightSegment.selectedSegmentIndex == 0 { options.append(.PresentedPercentHeight(heightValue)) }
-            else { options.append(.PresentedHeight(CGFloat(heightValue))) }
+            if heightSegment.selectedSegmentIndex == 0 { options.insert(.PresentedPercentHeight(heightValue)) }
+            else { options.insert(.PresentedHeight(CGFloat(heightValue))) }
         }
         
         return options

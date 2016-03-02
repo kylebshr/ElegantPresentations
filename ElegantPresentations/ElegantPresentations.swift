@@ -24,7 +24,7 @@ public struct ElegantPresentations {
      */
     public static func controller(presentedViewController presented: UIViewController,
                 presentingViewController presenting: UIViewController,
-                options: [PresentationOption]) -> UIPresentationController
+                options: Set<PresentationOption>) -> UIPresentationController
     {
         
         let options = PresentationOptions(options: options)
@@ -44,10 +44,11 @@ struct PresentationOptions {
     
     init() { }
     
-    init(options: [PresentationOption]) {
+    init(options: Set<PresentationOption>) {
         for option in options {
             switch option {
             case .NoDimmingView: dimmingViewAlpha = 0
+            case .CustomDimmingViewAlpha(let alpha): dimmingViewAlpha = alpha
             case .DismissOnDimmingViewTap: dimmingViewTapDismisses = true
             case .PresentingViewKeepsSize: presentingTransform = CGAffineTransformIdentity
             case .PresentedHeight(let height):
@@ -63,7 +64,11 @@ struct PresentationOptions {
         
         // They tried to do both — bad!
         if presentedHeight != -1 && usePercentHeight {
-            NSLog("\n-------------------------\nElegant Presentation Warning:\nDO NOT set a height and a percent height!\n-------------------------")
+            NSLog("\n-------------------------\nElegant Presentation Warning:\nDO NOT set a height and a percent height! Only one will be respected.\n-------------------------")
+        }
+        
+        if options.contains(.NoDimmingView) &&  dimmingViewAlpha != 0 {
+            NSLog("\n-------------------------\nElegant Presentation Warning:\nDO NOT set no dimming view and a custom dimming view alpha! Only one will be respected.\n-------------------------")
         }
     }
 }
@@ -77,11 +82,33 @@ struct PresentationOptions {
  - PresentedHeight:         Give the presenting view controller a fixed height (may not work well with rotation)
  - PresentedPercentHeight:  Give the presenting view controller a percent height of the presented view controller (should work well with rotation)
  */
-public enum PresentationOption {
+public enum PresentationOption: Hashable {
+    
     case NoDimmingView
+    case CustomDimmingViewAlpha(CGFloat)
     case DismissOnDimmingViewTap
     case PresentingViewKeepsSize
     case PresentedHeight(CGFloat)
     case PresentedPercentHeight(Double)
     case CustomPresentingScale(Double)
+    
+    var description: String {
+        switch self {
+        case .NoDimmingView:                        return "No dimming view"
+        case .CustomDimmingViewAlpha(let alpha):    return "Custom dimming view alpha \(alpha)"
+        case .DismissOnDimmingViewTap:              return "Dismiss on dimming view tap"
+        case .PresentingViewKeepsSize:              return "Presenting view keeps size"
+        case .PresentedHeight(let height):          return "Presented height \(height)"
+        case .PresentedPercentHeight(let percent):  return "Presented percent height \(percent)"
+        case .CustomPresentingScale(let scale):     return "Custom presenting scale \(scale)"
+        }
+    }
+    
+    public var hashValue: Int {
+        return description.hashValue
+    }
+}
+
+public func ==(lhs: PresentationOption, rhs: PresentationOption) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }
