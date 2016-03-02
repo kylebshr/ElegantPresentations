@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
     s.summary = "ElegantPresentations lets you present view controllers with style."
     s.requires_arc = true
 
-    s.version = "1.0.3"
+    s.version = "1.0.4"
 
     s.license = { :type => "MIT", :file => "LICENSE" }
 
