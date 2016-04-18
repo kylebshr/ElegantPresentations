@@ -28,7 +28,7 @@ class ElegantPresentationController: UIPresentationController {
     }()
 
     /// For dismissing on tap if option is set
-    private lazy var recognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("dismiss:"))
+    private lazy var recognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismiss))
 
     /// An options struct containing the customization options set
     private let options: PresentationOptions
