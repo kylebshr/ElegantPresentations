@@ -3,10 +3,10 @@ Pod::Spec.new do |s|
     s.platform = :ios
     s.ios.deployment_target = '8.0'
     s.name = "ElegantPresentations"
-    s.summary = "ElegantPresentations lets you present view controllers with style."
+    s.summary = "ElegantPresentations: present view controllers with style."
     s.requires_arc = true
 
-    s.version = "1.0.4"
+    s.version = "1.0.5"
 
     s.license = { :type => "MIT", :file => "LICENSE" }
 
