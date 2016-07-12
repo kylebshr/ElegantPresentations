@@ -10,7 +10,7 @@ import UIKit
 
 typealias CoordinatedAnimation = UIViewControllerTransitionCoordinatorContext? -> Void
 
-class ElegantPresentationController: UIPresentationController {
+class ElegantPresentationController: UIPresentationController, UIGestureRecognizerDelegate {
     
     
     // MARK: - Properties
@@ -57,6 +57,7 @@ class ElegantPresentationController: UIPresentationController {
         
         // If the option is set, then add the gesture recognizer for dismissal to the container
         if options.dimmingViewTapDismisses {
+            recognizer.delegate = self
             containerView!.addGestureRecognizer(recognizer)
         }
         
@@ -155,4 +156,12 @@ class ElegantPresentationController: UIPresentationController {
             animations(nil)
         }
     }
+
+    // MARK: UIGestureRecognizerDelegate protocol methods
+
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        let pointInPresentedView = touch.locationInView(presentedViewController.view)
+        return !presentedViewController.view.frame.contains(pointInPresentedView)
+    }
+
 }
