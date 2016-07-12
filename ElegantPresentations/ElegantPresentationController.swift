@@ -161,7 +161,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
 
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         let pointInPresentedView = touch.locationInView(presentedViewController.view)
-        return !presentedViewController.view.frame.contains(pointInPresentedView)
+        return !presentedViewController.view.bounds.contains(pointInPresentedView)
     }
 
 }
