@@ -112,21 +112,36 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
     
     override func sizeForChildContentContainer(container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         
-        // Percent height doesn't make sense as a negative value or greater than zero, so we'll enforce it
+        // Percent height doesn't make sense as a negative value or greater than one, so we'll enforce it
         let percentHeight = min(abs(options.presentedPercentHeight), 1)
 
-        let size: CGSize
+        let height: CGFloat
         // Return the appropiate height based on which option is set
         if options.usePercentHeight {
-            size = CGSize(width: parentSize.width, height: parentSize.height * CGFloat(percentHeight))
-        }
-        else if options.presentedHeight > 0 {
-            size = CGSize(width: parentSize.width, height: options.presentedHeight)
+            height = parentSize.height * CGFloat(percentHeight)
+        } else if options.presentedHeight > 0 {
+            height = options.presentedHeight
         } else {
-            size = parentSize
+            height = parentSize.height
         }
         
-        return CGSizeMake(size.width, min(max(size.height, options.presentedMinimumHeight), options.presentedMaximumHeight))
+        // Percent width doesn't make sense as a negative value or greater than one, so we'll enforce it
+        let percentWidth = min(abs(options.presentedPercentWidth), 1)
+        
+        let width: CGFloat
+        // Return the appropiate width based on which option is set
+        if options.usePercentWidth {
+            width = parentSize.width * CGFloat(percentWidth)
+        } else if options.presentedWidth > 0 {
+            width = options.presentedWidth
+        } else {
+            width = parentSize.width
+        }
+        
+        let clampedWidth  = max(min(width, options.presentedMaximumWidth), options.presentedMinimumWidth)
+        let clampedHeight = max(min(height, options.presentedMaximumHeight), options.presentedMinimumHeight)
+        
+        return CGSizeMake(clampedWidth, clampedHeight)
     }
     
     override func frameOfPresentedViewInContainerView() -> CGRect {

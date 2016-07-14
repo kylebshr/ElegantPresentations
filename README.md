@@ -67,9 +67,13 @@ enum PresentationOption {
     case DismissOnDimmingViewTap 			// Tapping outside the presented view controller dismisses it
     case PresentingViewKeepsSize 			// Prevent the presenting view controller from shrinking back
     case PresentedHeight(CGFloat)			// Give the presented view controller a fixed height
-    case PresentedMaximumHeight(CGFloat)    // Give the presented view controller a fixed maximum height
-    case PresentedMinimumHeight(CGFloat)    // Give the presented view controller a fixed minimum height
+    case PresentedMaximumHeight(CGFloat)	// Give the presented view controller a fixed maximum height
+    case PresentedMinimumHeight(CGFloat)	// Give the presented view controller a fixed minimum height
     case PresentedPercentHeight(Double)		// Give the presented view controller a percent height (of the presenting view controller)
+    case PresentedWidth(CGFloat)			// Give the presented view controller a fixed width
+    case PresentedMaximumWidth(CGFloat)		// Give the presented view controller a fixed maximum width
+    case PresentedMinimumWidth(CGFloat)		// Give the presented view controller a fixed minimum width
+    case PresentedPercentWidth(Double)		// Give the presented view controller a percent width (of the presenting view controller)
 }
 ````
 
@@ -77,7 +81,7 @@ enum PresentationOption {
 
 - [X] Adapt to rotation
 - [X] Add support for minimum and maximum height
-- [ ] Add support for setting presented view controller's width
+- [X] Add support for setting presented view controller's width
 - [ ] Add support for horizontal (drawer) presentation animation
 - [ ] Animate presenting view better when rotated
 
