@@ -203,7 +203,6 @@
                                                         <segment title="Constant Width"/>
                                                     </segments>
                                                     <connections>
-                                                        <action selector="heightSegmentDidChange:" destination="acm-D9-pLS" eventType="valueChanged" id="BGe-8l-L0X"/>
                                                         <action selector="widthSegmentDidChange:" destination="acm-D9-pLS" eventType="valueChanged" id="RQO-bp-mE6"/>
                                                     </connections>
                                                 </segmentedControl>

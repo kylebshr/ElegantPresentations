@@ -22,6 +22,7 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
     @IBOutlet weak var widthTextField: UITextField!
     @IBOutlet weak var widthLabel: UILabel!
     
+    var ltrTransitionDelegate: ElegantPresentationLeftToRightTransitionDelegate?
 
     var options: Set<PresentationOption> {
         var options = Set<PresentationOption>()
@@ -50,7 +51,17 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
         let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("Compose")
         
         destinationVC.modalPresentationStyle = .Custom
-        destinationVC.transitioningDelegate = self
+        
+        if let widthValue = Double(widthTextField.text!) {
+            if (widthSegment.selectedSegmentIndex == 0 && widthValue != 1.0) || widthSegment.selectedSegmentIndex != 0 {
+                self.ltrTransitionDelegate = ElegantPresentationLeftToRightTransitionDelegate(options: options)
+                destinationVC.transitioningDelegate = self.ltrTransitionDelegate
+            }
+        }
+        
+        if destinationVC.transitioningDelegate == nil {
+            destinationVC.transitioningDelegate = self
+        }
                 
         presentViewController(destinationVC, animated: true, completion: nil)
     }

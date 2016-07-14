@@ -57,6 +57,20 @@ Check out the example project for examples of both methods, and be sure to check
 ElegantPresentations.controller(..., options: [. PresentedHeight(view.frame.height - 40)])
 ````
 
+#### Horizontal presentation
+
+````swift
+let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("Compose")
+
+// Store a strong reference to the transition delegate as destinationVC will hold only a weak reference
+self.strongReferenceToTransitionDelegate = ElegantPresentationLeftToRightTransitionDelegate(options: [. PresentedWidth(250)])
+
+destinationVC.modalPresentationStyle = .Custom
+destinationVC.transitioningDelegate = self.strongReferenceToTransitionDelegate
+
+presentViewController(destinationVC, animated: true, completion: nil)
+````
+
 ### Options
 
 The factory method for creating the controller takes an option set, which is an array of `PresentationOption`. They are all implemented in the example project with easy toggles to try them all out.
@@ -82,7 +96,7 @@ enum PresentationOption {
 - [X] Adapt to rotation
 - [X] Add support for minimum and maximum height
 - [X] Add support for setting presented view controller's width
-- [ ] Add support for horizontal (drawer) presentation animation
+- [X] Add support for horizontal (drawer) presentation animation
 - [ ] Animate presenting view better when rotated
 
 ## Contribute
