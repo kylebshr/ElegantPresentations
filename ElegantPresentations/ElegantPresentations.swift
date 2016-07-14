@@ -90,8 +90,10 @@ struct PresentationOptions {
  - NoDimmingView:           Do not dim the presenting view controller
  - DismissOnDimmingViewTap: Dismiss the presented view controller when the area outside its view is tapped
  - PresentingViewKeepsSize: Do not shrink the presenting view controller into the background
- - PresentedHeight:         Give the presenting view controller a fixed height (may not work well with rotation)
- - PresentedPercentHeight:  Give the presenting view controller a percent height of the presented view controller (should work well with rotation)
+ - PresentedHeight:         Give the presented view controller a fixed height (may not work well with rotation)
+ - PresentedMaximumHeight:  Give the presented view controller a fixed maximum height (may not work well with rotation)
+ - PresentedMinimumHeight:  Give the presented view controller a fixed minimum height (may not work well with rotation)
+ - PresentedPercentHeight:  Give the presented view controller a percent height of the presenting view controller (should work well with rotation)
  */
 public enum PresentationOption: Hashable {
     
