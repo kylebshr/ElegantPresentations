@@ -115,15 +115,18 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
         // Percent height doesn't make sense as a negative value or greater than zero, so we'll enforce it
         let percentHeight = min(abs(options.presentedPercentHeight), 1)
 
+        let size: CGSize
         // Return the appropiate height based on which option is set
         if options.usePercentHeight {
-            return CGSize(width: parentSize.width, height: parentSize.height * CGFloat(percentHeight))
+            size = CGSize(width: parentSize.width, height: parentSize.height * CGFloat(percentHeight))
         }
         else if options.presentedHeight > 0 {
-            return CGSize(width: parentSize.width, height: options.presentedHeight)
+            size = CGSize(width: parentSize.width, height: options.presentedHeight)
+        } else {
+            size = parentSize
         }
         
-        return parentSize
+        return CGSizeMake(size.width, min(max(size.height, options.presentedMinimumHeight), options.presentedMaximumHeight))
     }
     
     override func frameOfPresentedViewInContainerView() -> CGRect {

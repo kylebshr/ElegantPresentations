@@ -40,6 +40,8 @@ struct PresentationOptions {
     var presentingTransform = CGAffineTransformMakeScale(0.93, 0.93)
     var presentedHeight: CGFloat = -1
     var presentedPercentHeight = 1.0
+    var presentedMaximumHeight: CGFloat = CGFloat.max
+    var presentedMinimumHeight: CGFloat = 0
     var usePercentHeight = true
     
     init() { }
@@ -57,6 +59,10 @@ struct PresentationOptions {
             case .PresentedPercentHeight(let percentHeight):
                 usePercentHeight = true
                 presentedPercentHeight = percentHeight
+            case .PresentedMaximumHeight(let maximumHeight):
+                presentedMaximumHeight = maximumHeight
+            case .PresentedMinimumHeight(let minimumHeight):
+                presentedMinimumHeight = minimumHeight
             case .CustomPresentingScale(let scale):
                 presentingTransform = CGAffineTransformMakeScale(CGFloat(min(1, scale)), CGFloat(min(1, scale)))
             }
@@ -70,6 +76,11 @@ struct PresentationOptions {
         if options.contains(.NoDimmingView) &&  dimmingViewAlpha != 0 {
             NSLog("\n-------------------------\nElegant Presentation Warning:\nDO NOT set no dimming view and a custom dimming view alpha! Only one will be respected.\n-------------------------")
         }
+        
+        if presentedMaximumHeight < presentedMinimumHeight {
+            NSLog("\n-------------------------\nElegant Presentation Warning:\nDO NOT set a maximum height lower than minimum height! Only one will be respected.\n-------------------------")
+        }
+        
     }
 }
 
@@ -89,6 +100,8 @@ public enum PresentationOption: Hashable {
     case DismissOnDimmingViewTap
     case PresentingViewKeepsSize
     case PresentedHeight(CGFloat)
+    case PresentedMaximumHeight(CGFloat)
+    case PresentedMinimumHeight(CGFloat)
     case PresentedPercentHeight(Double)
     case CustomPresentingScale(Double)
     
@@ -100,6 +113,8 @@ public enum PresentationOption: Hashable {
         case .PresentingViewKeepsSize:              return "Presenting view keeps size"
         case .PresentedHeight(let height):          return "Presented height \(height)"
         case .PresentedPercentHeight(let percent):  return "Presented percent height \(percent)"
+        case .PresentedMaximumHeight(let height):   return "Presented maximum height \(height)"
+        case .PresentedMinimumHeight(let height):   return "Presented minimum height \(height)"
         case .CustomPresentingScale(let scale):     return "Custom presenting scale \(scale)"
         }
     }
