@@ -23,7 +23,11 @@ public class ElegantPresentationLeftToRightTransitionDelegate: NSObject, UIViewC
     
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         
+        #if swift(>=2.3)
+        let container = transitionContext.containerView()
+        #else
         guard let container = transitionContext.containerView() else { return }
+        #endif
         
         enum Direction {
             case LeftToRight
@@ -59,11 +63,11 @@ public class ElegantPresentationLeftToRightTransitionDelegate: NSObject, UIViewC
         let animationTuple: AnimationTuple?
         
         if let toView = transitionContext.viewForKey(UITransitionContextToViewKey),
-               presentedViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+            let presentedViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
         {
             animationTuple = prepare(presentedViewController, toView, .LeftToRight)
         } else if let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey),
-                      dismissedViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
+                      let dismissedViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
         {
             animationTuple = prepare(dismissedViewController, fromView, .RightToLeft)
         } else {
@@ -102,9 +106,15 @@ public class ElegantPresentationLeftToRightTransitionDelegate: NSObject, UIViewC
     
     public func presentationControllerForPresentedViewController(
         presented: UIViewController,
-        presentingViewController presenting: UIViewController,
+        presentingViewController: UIViewController?,
         sourceViewController source: UIViewController
     ) -> UIPresentationController? {
+        #if swift(>=2.3)
+        guard let presenting = presentingViewController
+        else { return nil }
+        #else
+        let presenting = presentingViewController
+        #endif
         return ElegantPresentations.controller(
             presentedViewController: presented,
             presentingViewController: presenting,
