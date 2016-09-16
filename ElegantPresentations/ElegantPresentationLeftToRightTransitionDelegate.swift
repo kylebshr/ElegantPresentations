@@ -104,22 +104,33 @@ public class ElegantPresentationLeftToRightTransitionDelegate: NSObject, UIViewC
         return self
     }
     
+    #if swift(>=2.3)
     public func presentationControllerForPresentedViewController(
         presented: UIViewController,
         presentingViewController: UIViewController?,
         sourceViewController source: UIViewController
     ) -> UIPresentationController? {
-        #if swift(>=2.3)
         guard let presenting = presentingViewController
         else { return nil }
-        #else
-        let presenting = presentingViewController
-        #endif
         return ElegantPresentations.controller(
             presentedViewController: presented,
             presentingViewController: presenting,
             options: self.presentationOptions
         )
     }
+    #else
+    public func presentationControllerForPresentedViewController(
+        presented: UIViewController,
+        presentingViewController: UIViewController,
+        sourceViewController source: UIViewController
+        ) -> UIPresentationController? {
+        let presenting = presentingViewController
+        return ElegantPresentations.controller(
+            presentedViewController: presented,
+            presentingViewController: presenting,
+            options: self.presentationOptions
+        )
+    }
+    #endif
     
 }
