@@ -18,7 +18,11 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
     @IBOutlet weak var heightSegment: UISegmentedControl!
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var heightLabel: UILabel!
+    @IBOutlet weak var widthSegment: UISegmentedControl!
+    @IBOutlet weak var widthTextField: UITextField!
+    @IBOutlet weak var widthLabel: UILabel!
     
+    var ltrTransitionDelegate: ElegantPresentationLeftToRightTransitionDelegate?
 
     var options: Set<PresentationOption> {
         var options = Set<PresentationOption>()
@@ -32,6 +36,11 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
             else { options.insert(.PresentedHeight(CGFloat(heightValue))) }
         }
         
+        if let widthValue = Double(widthTextField.text!) {
+            if widthSegment.selectedSegmentIndex == 0 { options.insert(.PresentedPercentWidth(widthValue)) }
+            else { options.insert(.PresentedWidth(CGFloat(widthValue))) }
+        }
+        
         return options
     }
     
@@ -42,7 +51,17 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
         let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("Compose")
         
         destinationVC.modalPresentationStyle = .Custom
-        destinationVC.transitioningDelegate = self
+        
+        if let widthValue = Double(widthTextField.text!) {
+            if (widthSegment.selectedSegmentIndex == 0 && widthValue != 1.0) || widthSegment.selectedSegmentIndex != 0 {
+                self.ltrTransitionDelegate = ElegantPresentationLeftToRightTransitionDelegate(options: options)
+                destinationVC.transitioningDelegate = self.ltrTransitionDelegate
+            }
+        }
+        
+        if destinationVC.transitioningDelegate == nil {
+            destinationVC.transitioningDelegate = self
+        }
                 
         presentViewController(destinationVC, animated: true, completion: nil)
     }
@@ -50,6 +69,11 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
     @IBAction func heightSegmentDidChange(sender: UISegmentedControl) {
         heightLabel.text = sender.selectedSegmentIndex == 0 ? "Percent Value:" : "Constant Value:"
         heightTextField.text = sender.selectedSegmentIndex == 0 ? "1.0" : "200"
+    }
+    
+    @IBAction func widthSegmentDidChange(sender: UISegmentedControl) {
+        widthLabel.text = sender.selectedSegmentIndex == 0 ? "Percent Value:" : "Constant Value:"
+        widthTextField.text = sender.selectedSegmentIndex == 0 ? "1.0" : "200"
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
