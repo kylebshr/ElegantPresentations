@@ -23,48 +23,48 @@ class ViewController: UITableViewController, UIViewControllerTransitioningDelega
     var options: Set<PresentationOption> {
         var options = Set<PresentationOption>()
         
-        if !shrinkPresentingViewSwitch.on { options.insert(.PresentingViewKeepsSize) }
-        if !dimPresentingViewSwitch.on { options.insert(.NoDimmingView) }
-        if dismissOnTapSwitch.on { options.insert(.DismissOnDimmingViewTap) }
+        if !shrinkPresentingViewSwitch.isOn { options.insert(.presentingViewKeepsSize) }
+        if !dimPresentingViewSwitch.isOn { options.insert(.noDimmingView) }
+        if dismissOnTapSwitch.isOn { options.insert(.dismissOnDimmingViewTap) }
         
         if let heightValue = Double(heightTextField.text!) {
-            if heightSegment.selectedSegmentIndex == 0 { options.insert(.PresentedPercentHeight(heightValue)) }
-            else { options.insert(.PresentedHeight(CGFloat(heightValue))) }
+            if heightSegment.selectedSegmentIndex == 0 { options.insert(.presentedPercentHeight(heightValue)) }
+            else { options.insert(.presentedHeight(CGFloat(heightValue))) }
         }
         
         return options
     }
     
-    @IBAction func unwind(segue: UIStoryboardSegue) { }
+    @IBAction func unwind(_ segue: UIStoryboardSegue) { }
     
-    @IBAction func codeButtonPressed(sender: UIBarButtonItem) {
+    @IBAction func codeButtonPressed(_ sender: UIBarButtonItem) {
      
-        let destinationVC = storyboard!.instantiateViewControllerWithIdentifier("Compose")
+        let destinationVC = storyboard!.instantiateViewController(withIdentifier: "Compose")
         
-        destinationVC.modalPresentationStyle = .Custom
+        destinationVC.modalPresentationStyle = .custom
         destinationVC.transitioningDelegate = self
                 
-        presentViewController(destinationVC, animated: true, completion: nil)
+        present(destinationVC, animated: true, completion: nil)
     }
     
-    @IBAction func heightSegmentDidChange(sender: UISegmentedControl) {
+    @IBAction func heightSegmentDidChange(_ sender: UISegmentedControl) {
         heightLabel.text = sender.selectedSegmentIndex == 0 ? "Percent Value:" : "Constant Value:"
         heightTextField.text = sender.selectedSegmentIndex == 0 ? "1.0" : "200"
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        segue.destinationViewController.modalPresentationStyle = .Custom
-        segue.destinationViewController.transitioningDelegate = self
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        segue.destination.modalPresentationStyle = .custom
+        segue.destination.transitioningDelegate = self
     }
     
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return ElegantPresentations.controller(presentedViewController: presented, presentingViewController: presenting, options: options)
     }
 }
 
 extension ViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }

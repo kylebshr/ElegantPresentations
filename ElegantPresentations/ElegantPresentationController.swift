@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias CoordinatedAnimation = UIViewControllerTransitionCoordinatorContext? -> Void
+typealias CoordinatedAnimation = (UIViewControllerTransitionCoordinatorContext?) -> Void
 
 class ElegantPresentationController: UIPresentationController, UIGestureRecognizerDelegate {
     
@@ -20,9 +20,9 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
         
         let view = UIView()
         
-        view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.alpha = 0
-        view.userInteractionEnabled = false
+        view.isUserInteractionEnabled = false
         
         return view
     }()
@@ -45,9 +45,9 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
      
      - returns: An initialized presentation controller object.
      */
-    init(presentedViewController: UIViewController, presentingViewController: UIViewController, options: PresentationOptions) {
+    init(presentedViewController: UIViewController, presentingViewController: UIViewController?, options: PresentationOptions) {
         self.options = options
-        super.init(presentedViewController: presentedViewController, presentingViewController: presentingViewController)
+        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
     }
     
     
@@ -64,7 +64,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
         // Prepare and position the dimming view
         dimmingView.alpha = 0
         dimmingView.frame = containerView!.bounds
-        containerView?.insertSubview(dimmingView, atIndex: 0)
+        containerView?.insertSubview(dimmingView, at: 0)
         
         // Animate these properties with the transtion coordinator if possible
         let animations: CoordinatedAnimation = { [unowned self] _ in
@@ -80,7 +80,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
         // Animate these properties with the transtion coordinator if possible
         let animations: CoordinatedAnimation = { [unowned self] _ in
             self.dimmingView.alpha = 0
-            self.presentingViewController.view.transform = CGAffineTransformIdentity
+            self.presentingViewController.view.transform = .identity
         }
         
         transtionWithCoordinator(animations)
@@ -89,7 +89,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
     
     // MARK: - Adaptation
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         /* 
          There's a bug when rotating that makes the presented view controller permanently 
@@ -98,19 +98,19 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
          It jumps because it's not in the animation block, but isn't noticiable unless in 
          slow-mo. Placing it in the animation block does not fix the issue, so here it is.
         */
-        presentingViewController.view.transform = CGAffineTransformIdentity
+        presentingViewController.view.transform = .identity
         
         // Animate these with the coordinator
         let animations: CoordinatedAnimation = { [unowned self] _ in
             self.dimmingView.frame = self.containerView!.bounds
             self.presentingViewController.view.transform = self.options.presentingTransform
-            self.presentedView()?.frame = self.frameOfPresentedViewInContainerView()
+            self.presentedView?.frame = self.frameOfPresentedViewInContainerView
         }
         
-        coordinator.animateAlongsideTransition(animations, completion: nil)
+        coordinator.animate(alongsideTransition: animations, completion: nil)
     }
     
-    override func sizeForChildContentContainer(container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         
         // Percent height doesn't make sense as a negative value or greater than zero, so we'll enforce it
         let percentHeight = min(abs(options.presentedPercentHeight), 1)
@@ -126,11 +126,11 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
         return parentSize
     }
     
-    override func frameOfPresentedViewInContainerView() -> CGRect {
+    override var frameOfPresentedViewInContainerView: CGRect {
         
         // Grab the parent and child sizes
         let parentSize = containerView!.bounds.size
-        let childSize = sizeForChildContentContainer(presentedViewController, withParentContainerSize: parentSize)
+        let childSize = size(forChildContentContainer: presentedViewController, withParentContainerSize: parentSize)
         
         // Create and return an appropiate frame
         return CGRect(x: 0, y: parentSize.height - childSize.height, width: childSize.width, height: childSize.height)
@@ -140,17 +140,17 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
     // MARK: - Helper functions
     
     // For the tap-to-dismiss
-    func dismiss(sender: UITapGestureRecognizer) {
-        presentedViewController.dismissViewControllerAnimated(true, completion: nil)
+    func dismiss(_ sender: UITapGestureRecognizer) {
+        presentedViewController.dismiss(animated: true, completion: nil)
     }
     
     /*
      I noticed myself doing this a lot (more so in earlier versions) so I made a quick function.
      Simply takes a closure with animations in them and attempts to animate with the coordinator.
     */
-    private func transtionWithCoordinator(animations: CoordinatedAnimation) {
-        if let coordinator = presentingViewController.transitionCoordinator() {
-            coordinator.animateAlongsideTransition(animations, completion: nil)
+    private func transtionWithCoordinator(_ animations: @escaping CoordinatedAnimation) {
+        if let coordinator = presentingViewController.transitionCoordinator {
+            coordinator.animate(alongsideTransition: animations, completion: nil)
         }
         else {
             animations(nil)
@@ -159,8 +159,8 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
 
     // MARK: UIGestureRecognizerDelegate protocol methods
 
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        let pointInPresentedView = touch.locationInView(presentedViewController.view)
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let pointInPresentedView = touch.location(in: presentedViewController.view)
         return !presentedViewController.view.frame.contains(pointInPresentedView)
     }
 
