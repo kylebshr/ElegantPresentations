@@ -8,12 +8,12 @@
 
 import UIKit
 
-public class ElegantPresentationLeftToRightTransitionDelegate: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
+open class ElegantPresentationLeftToRightTransitionDelegate: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
     
     let presentationOptions: Set<PresentationOption>
-    let presentationAnimationDuration: NSTimeInterval
+    let presentationAnimationDuration: TimeInterval
     
-    public init( options: Set<PresentationOption>, duration: NSTimeInterval = 0.2 ) {
+    public init( options: Set<PresentationOption>, duration: TimeInterval = 0.2 ) {
         self.presentationOptions = options
         self.presentationAnimationDuration = duration
         super.init()
@@ -21,13 +21,13 @@ public class ElegantPresentationLeftToRightTransitionDelegate: NSObject, UIViewC
     
     // MARK: UIViewControllerAnimatedTransitioning protocol methods
     
-    public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    open func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
-        guard let container = transitionContext.containerView() else { return }
+        let container = transitionContext.containerView
         
         enum Direction {
-            case LeftToRight
-            case RightToLeft
+            case leftToRight
+            case rightToLeft
         }
         
         typealias AnimationTuple = (animationBlock: (Void) -> Void, completionBlock: (Void) -> Void)
@@ -35,75 +35,75 @@ public class ElegantPresentationLeftToRightTransitionDelegate: NSObject, UIViewC
         let prepare: (UIViewController, UIView, Direction) -> AnimationTuple = {
             viewController, view, direction in
             
-            let finalFrame = transitionContext.finalFrameForViewController(viewController)
-            let offscreenTransform = CGAffineTransformMakeTranslation(-finalFrame.width, 0)
+            let finalFrame = transitionContext.finalFrame(for: viewController)
+            let offscreenTransform = CGAffineTransform(translationX: -finalFrame.width, y: 0)
             view.frame = finalFrame
             container.addSubview(view)
             
             switch direction {
-            case .LeftToRight:
+            case .leftToRight:
                 view.transform = offscreenTransform
                 return (
-                    animationBlock: { view.transform = CGAffineTransformIdentity },
-                    completionBlock: { view.transform = CGAffineTransformIdentity }
+                    animationBlock: { view.transform = CGAffineTransform.identity },
+                    completionBlock: { view.transform = CGAffineTransform.identity }
                 )
-            case .RightToLeft:
-                view.transform = CGAffineTransformIdentity
+            case .rightToLeft:
+                view.transform = CGAffineTransform.identity
                 return (
                     animationBlock: { view.transform = offscreenTransform },
-                    completionBlock: { view.transform = CGAffineTransformIdentity }
+                    completionBlock: { view.transform = CGAffineTransform.identity }
                 )
             }
         }
         
         let animationTuple: AnimationTuple?
         
-        if let toView = transitionContext.viewForKey(UITransitionContextToViewKey),
-               presentedViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+        if let toView = transitionContext.view(forKey: UITransitionContextViewKey.to),
+               let presentedViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
         {
-            animationTuple = prepare(presentedViewController, toView, .LeftToRight)
-        } else if let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey),
-                      dismissedViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
+            animationTuple = prepare(presentedViewController, toView, .leftToRight)
+        } else if let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from),
+                      let dismissedViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
         {
-            animationTuple = prepare(dismissedViewController, fromView, .RightToLeft)
+            animationTuple = prepare(dismissedViewController, fromView, .rightToLeft)
         } else {
             animationTuple = nil
         }
         
-        let duration = self.transitionDuration(transitionContext)
+        let duration = self.transitionDuration(using: transitionContext)
         
         guard let tuple = animationTuple else { return }
         
-        UIView.animateWithDuration(duration, animations: tuple.animationBlock) { finished in
+        UIView.animate(withDuration: duration, animations: tuple.animationBlock, completion: { finished in
             tuple.completionBlock()
             transitionContext.completeTransition(finished)
-        }
+        }) 
     }
     
-    public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    open func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return self.presentationAnimationDuration
     }
     
     // MARK: UIViewControllerTransitioningDelegate protocol methods
     
-    public func animationControllerForPresentedController(
-        presented: UIViewController,
-        presentingController presenting: UIViewController,
-        sourceController source: UIViewController
+    open func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
         return self
     }
     
-    public func animationControllerForDismissedController(
-        dismissed: UIViewController
+    open func animationController(
+        forDismissed dismissed: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
         return self
     }
     
-    public func presentationControllerForPresentedViewController(
-        presented: UIViewController,
-        presentingViewController presenting: UIViewController,
-        sourceViewController source: UIViewController
+    open func presentationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController?,
+        source: UIViewController
     ) -> UIPresentationController? {
         return ElegantPresentations.controller(
             presentedViewController: presented,
