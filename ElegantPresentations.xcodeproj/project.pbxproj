@@ -12,6 +12,7 @@
 		2729C38D1C7A417B00B41D49 /* ElegantPresentationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729C38C1C7A417B00B41D49 /* ElegantPresentationsTests.swift */; };
 		2729C3991C7A419900B41D49 /* ElegantPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729C3971C7A419900B41D49 /* ElegantPresentationController.swift */; };
 		2729C39A1C7A419900B41D49 /* ElegantPresentations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729C3981C7A419900B41D49 /* ElegantPresentations.swift */; };
+		95F185AB1D375D3E00AFAB05 /* ElegantPresentationLeftToRightTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F185AA1D375D3E00AFAB05 /* ElegantPresentationLeftToRightTransitionDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		2729C38E1C7A417B00B41D49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2729C3971C7A419900B41D49 /* ElegantPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantPresentationController.swift; sourceTree = "<group>"; };
 		2729C3981C7A419900B41D49 /* ElegantPresentations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantPresentations.swift; sourceTree = "<group>"; };
+		95F185AA1D375D3E00AFAB05 /* ElegantPresentationLeftToRightTransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElegantPresentationLeftToRightTransitionDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				2729C3981C7A419900B41D49 /* ElegantPresentations.swift */,
 				2729C3971C7A419900B41D49 /* ElegantPresentationController.swift */,
+				95F185AA1D375D3E00AFAB05 /* ElegantPresentationLeftToRightTransitionDelegate.swift */,
 				2729C3801C7A417B00B41D49 /* ElegantPresentations.h */,
 				2729C3821C7A417B00B41D49 /* Info.plist */,
 			);
@@ -202,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95F185AB1D375D3E00AFAB05 /* ElegantPresentationLeftToRightTransitionDelegate.swift in Sources */,
 				2729C39A1C7A419900B41D49 /* ElegantPresentations.swift in Sources */,
 				2729C3991C7A419900B41D49 /* ElegantPresentationController.swift in Sources */,
 			);
