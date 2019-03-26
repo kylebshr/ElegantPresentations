@@ -140,7 +140,7 @@ class ElegantPresentationController: UIPresentationController, UIGestureRecogniz
     // MARK: - Helper functions
     
     // For the tap-to-dismiss
-    func dismiss(_ sender: UITapGestureRecognizer) {
+    @objc func dismiss(_ sender: UITapGestureRecognizer) {
         presentedViewController.dismiss(animated: true, completion: nil)
     }
     
